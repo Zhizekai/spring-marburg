@@ -24,6 +24,13 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 
+		<!--热部署-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<optional>true</optional>
+		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -40,8 +47,8 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<version>1.16.20</version>
-			<scope>provided</scope>
+			<version>1.18.0</version>
+			<optional>true</optional>
 		</dependency>
 	</dependencies>
 
@@ -50,6 +57,12 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<!--热部署配置-->
+<!--				还得在设置里面修改自动构建-->
+				<configuration>
+					<fork>true</fork>
+				</configuration>
+
 			</plugin>
 		</plugins>
 	</build>
