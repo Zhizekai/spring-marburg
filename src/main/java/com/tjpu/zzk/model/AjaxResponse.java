@@ -1,12 +1,17 @@
-package com.tjpu.zzk.controller;
+package com.tjpu.zzk.model;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 @Data
+@ApiModel
 public class AjaxResponse {
 
 
+    @ApiModelProperty("是否请求成功")
     private boolean isok;
+    @ApiModelProperty("请求状态码")
     private int code;
     private String message;
     private Object data;
