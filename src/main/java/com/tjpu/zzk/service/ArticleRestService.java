@@ -1,17 +1,18 @@
 package com.tjpu.zzk.service;
 
-import com.tjpu.zzk.model.Article;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
+import com.tjpu.zzk.model.ArticleVO;
 
+import java.util.List;
 
-@Slf4j
-@Service
-public class ArticleRestService {
+public interface ArticleRestService {
 
-    public String saveArticle(Article article) {
+    ArticleVO saveArticle(ArticleVO article);
 
-        log.info("saveArticle {}",article);
-        return "测试";
-    }
+    void deleteArticle(Long id);
+
+    void updateArticle(ArticleVO article);
+
+    ArticleVO getArticle(Long id);
+
+    List<ArticleVO> getAll();
 }

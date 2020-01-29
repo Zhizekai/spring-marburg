@@ -1,8 +1,6 @@
 package com.tjpu.zzk;
 
 import com.tjpu.zzk.controller.ArticleRestController;
-import com.tjpu.zzk.model.Article;
-import com.tjpu.zzk.model.Reader;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,10 +11,6 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-
-import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 

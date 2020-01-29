@@ -1,9 +1,7 @@
 package com.tjpu.zzk;
 
-import com.tjpu.zzk.controller.ArticleRestController;
-import com.tjpu.zzk.service.ArticleRestService;
+import com.tjpu.zzk.service.ArticleMybatisRestServiceImpl;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -14,7 +12,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import javax.annotation.Resource;
 
@@ -31,7 +28,7 @@ public class ArticleRestControllerTest2 {
     private MockMvc mockMvc;    //模拟网络请求
 
     @Resource
-    ArticleRestService articleRestService;
+    ArticleMybatisRestServiceImpl articleRestService;
 //    @Before
 //    public void setUp() {
 //        mockMvc = MockMvcBuilders.standaloneSetup(new ArticleRestController()).build();

@@ -1,8 +1,8 @@
 package com.tjpu.zzk.controller;
 
 import com.tjpu.zzk.model.AjaxResponse;
-import com.tjpu.zzk.model.Article;
-import com.tjpu.zzk.service.ArticleRestService;
+import com.tjpu.zzk.model.ArticleVO;
+import com.tjpu.zzk.service.ArticleMybatisRestServiceImpl;
 import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +16,7 @@ import java.util.Date;
 public class ArticleRestController {
 
     @Resource
-    ArticleRestService articleRestService;
+    ArticleMybatisRestServiceImpl articleRestService;
 
 
     /**
@@ -37,9 +37,9 @@ public class ArticleRestController {
     })
 //    @RequestMapping(value = "/article",method = POST,produces = "application/json")
     @PostMapping("/article")
-    public AjaxResponse saveArticle(@RequestBody Article article) {
+    public AjaxResponse saveArticle(@RequestBody ArticleVO article) {
 
-        log.info("saveArticle {}",article);
+//        log.info("saveArticle {}",article);
 
         articleRestService.saveArticle(article);
         return AjaxResponse.success(article);
@@ -93,8 +93,11 @@ public class ArticleRestController {
     @DeleteMapping("/article/{id}")
     public AjaxResponse deleteArticle(@PathVariable Long id) {
 
-        log.info("deleteArticle {}",id);
+//        log.info("deleteArticle {}",id);
+
+        articleRestService.deleteArticle(id);
         return AjaxResponse.success(id);
+
     }
 
     /**
@@ -105,11 +108,13 @@ public class ArticleRestController {
      */
 //    @RequestMapping(value = "/article/{id}",method = PUT,produces = "application/json")
     @PutMapping("/article/{id}")
-    public AjaxResponse updateArticle(@PathVariable Long id ,@RequestBody Article article) {
+    public AjaxResponse updateArticle(@PathVariable Long id ,@RequestBody ArticleVO article) {
 
         article.setId(id);
-        log.info("updateArticle {}",article);
+//        log.info("updateArticle {}",article);
+        articleRestService.updateArticle(article);
         return AjaxResponse.success(id);
+
     }
 
     /**
@@ -121,11 +126,25 @@ public class ArticleRestController {
     @GetMapping("/article/{id}")
     public AjaxResponse getArticle(@PathVariable Long id) {
 
-        Article article = Article.builder()
-                .id(1L).author("zimuge").content("chichichic")
-                .createTime(new Date()).title("t1").build();
+//        ArticleVO article = ArticleVO.builder()
+//                .id(1L).author("zimuge").content("chichichic")
+//                .createTime(new Date()).title("t1").build();
 
+        return AjaxResponse.success(articleRestService.getArticle(id));
+    }
 
-        return AjaxResponse.success(article);
+    /**
+     * 获取所有
+     * @return zhuang
+     */
+//    @RequestMapping(value = "/article",method = POST,produces = "application/json")
+    @GetMapping("/article")
+    public AjaxResponse getAllArticle() {
+
+//        ArticleVO article = ArticleVO.builder()
+//                .id(1L).author("zimuge").content("chichichic")
+//                .createTime(new Date()).title("t1").build();
+
+        return AjaxResponse.success(articleRestService.getAll());
     }
 }

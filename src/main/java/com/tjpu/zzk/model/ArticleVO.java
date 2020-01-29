@@ -2,7 +2,9 @@ package com.tjpu.zzk.model;
 
 
 import com.fasterxml.jackson.annotation.JsonAlias;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,7 +18,7 @@ import java.util.List;
 @AllArgsConstructor //全参构造方法
 @NoArgsConstructor  //无参构造方法
 @Builder
-public class Article {
+public class ArticleVO {
 
 
     /**
@@ -35,6 +37,9 @@ public class Article {
     private String author;
     private String title;
     private String content;
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date createTime;
     private List<Reader> reader;
 
