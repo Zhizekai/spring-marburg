@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tjpu.zzk.generator.PDao">
+  <resultMap id="BaseResultMap" type="com.tjpu.zzk.model.P">
+    <id column="PNO" jdbcType="INTEGER" property="PNO" />
+    <result column="PNAME" jdbcType="VARCHAR" property="PNAME" />
+    <result column="COLOR" jdbcType="VARCHAR" property="COLOR" />
+    <result column="WEIGHT" jdbcType="VARCHAR" property="WEIGHT" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    PNO, PNAME, COLOR, WEIGHT
+  </sql>
+  <select id="selectByExample" parameterType="com.tjpu.zzk.model.PExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from p
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null">
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from p
+    where PNO = #{PNO,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from p
+    where PNO = #{PNO,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.tjpu.zzk.model.PExample">
+    delete from p
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" keyColumn="PNO" keyProperty="PNO" parameterType="com.tjpu.zzk.model.P" useGeneratedKeys="true">
+    insert into p (PNAME, COLOR, WEIGHT
+      )
+    values (#{PNAME,jdbcType=VARCHAR}, #{COLOR,jdbcType=VARCHAR}, #{WEIGHT,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="PNO" keyProperty="PNO" parameterType="com.tjpu.zzk.model.P" useGeneratedKeys="true">
+    insert into p
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="PNAME != null">
+        PNAME,
+      </if>
+      <if test="COLOR != null">
+        COLOR,
+      </if>
+      <if test="WEIGHT != null">
+        WEIGHT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="PNAME != null">
+        #{PNAME,jdbcType=VARCHAR},
+      </if>
+      <if test="COLOR != null">
+        #{COLOR,jdbcType=VARCHAR},
+      </if>
+      <if test="WEIGHT != null">
+        #{WEIGHT,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.tjpu.zzk.model.PExample" resultType="java.lang.Long">
+    select count(*) from p
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update p
+    <set>
+      <if test="record.PNO != null">
+        PNO = #{record.PNO,jdbcType=INTEGER},
+      </if>
+      <if test="record.PNAME != null">
+        PNAME = #{record.PNAME,jdbcType=VARCHAR},
+      </if>
+      <if test="record.COLOR != null">
+        COLOR = #{record.COLOR,jdbcType=VARCHAR},
+      </if>
+      <if test="record.WEIGHT != null">
+        WEIGHT = #{record.WEIGHT,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update p
+    set PNO = #{record.PNO,jdbcType=INTEGER},
+      PNAME = #{record.PNAME,jdbcType=VARCHAR},
+      COLOR = #{record.COLOR,jdbcType=VARCHAR},
+      WEIGHT = #{record.WEIGHT,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tjpu.zzk.model.P">
+    update p
+    <set>
+      <if test="PNAME != null">
+        PNAME = #{PNAME,jdbcType=VARCHAR},
+      </if>
+      <if test="COLOR != null">
+        COLOR = #{COLOR,jdbcType=VARCHAR},
+      </if>
+      <if test="WEIGHT != null">
+        WEIGHT = #{WEIGHT,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where PNO = #{PNO,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tjpu.zzk.model.P">
+    update p
+    set PNAME = #{PNAME,jdbcType=VARCHAR},
+      COLOR = #{COLOR,jdbcType=VARCHAR},
+      WEIGHT = #{WEIGHT,jdbcType=VARCHAR}
+    where PNO = #{PNO,jdbcType=INTEGER}
+  </update>
+</mapper>

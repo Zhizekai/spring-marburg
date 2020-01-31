@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tjpu.zzk.generator.SpjDao">
+  <resultMap id="BaseResultMap" type="com.tjpu.zzk.model.Spj">
+    <id column="QTY" jdbcType="INTEGER" property="qty" />
+    <result column="JNO" jdbcType="INTEGER" property="jno" />
+    <result column="PNO" jdbcType="INTEGER" property="pno" />
+    <result column="SNO" jdbcType="INTEGER" property="sno" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    QTY, JNO, PNO, SNO
+  </sql>
+  <select id="selectByExample" parameterType="com.tjpu.zzk.model.SpjExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from SPJ
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null">
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from SPJ
+    where QTY = #{qty,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from SPJ
+    where QTY = #{qty,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.tjpu.zzk.model.SpjExample">
+    delete from SPJ
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" keyColumn="QTY" keyProperty="qty" parameterType="com.tjpu.zzk.model.Spj" useGeneratedKeys="true">
+    insert into SPJ (JNO, PNO, SNO
+      )
+    values (#{jno,jdbcType=INTEGER}, #{pno,jdbcType=INTEGER}, #{sno,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="QTY" keyProperty="qty" parameterType="com.tjpu.zzk.model.Spj" useGeneratedKeys="true">
+    insert into SPJ
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="jno != null">
+        JNO,
+      </if>
+      <if test="pno != null">
+        PNO,
+      </if>
+      <if test="sno != null">
+        SNO,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="jno != null">
+        #{jno,jdbcType=INTEGER},
+      </if>
+      <if test="pno != null">
+        #{pno,jdbcType=INTEGER},
+      </if>
+      <if test="sno != null">
+        #{sno,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.tjpu.zzk.model.SpjExample" resultType="java.lang.Long">
+    select count(*) from SPJ
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update SPJ
+    <set>
+      <if test="record.qty != null">
+        QTY = #{record.qty,jdbcType=INTEGER},
+      </if>
+      <if test="record.jno != null">
+        JNO = #{record.jno,jdbcType=INTEGER},
+      </if>
+      <if test="record.pno != null">
+        PNO = #{record.pno,jdbcType=INTEGER},
+      </if>
+      <if test="record.sno != null">
+        SNO = #{record.sno,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update SPJ
+    set QTY = #{record.qty,jdbcType=INTEGER},
+      JNO = #{record.jno,jdbcType=INTEGER},
+      PNO = #{record.pno,jdbcType=INTEGER},
+      SNO = #{record.sno,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tjpu.zzk.model.Spj">
+    update SPJ
+    <set>
+      <if test="jno != null">
+        JNO = #{jno,jdbcType=INTEGER},
+      </if>
+      <if test="pno != null">
+        PNO = #{pno,jdbcType=INTEGER},
+      </if>
+      <if test="sno != null">
+        SNO = #{sno,jdbcType=INTEGER},
+      </if>
+    </set>
+    where QTY = #{qty,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tjpu.zzk.model.Spj">
+    update SPJ
+    set JNO = #{jno,jdbcType=INTEGER},
+      PNO = #{pno,jdbcType=INTEGER},
+      SNO = #{sno,jdbcType=INTEGER}
+    where QTY = #{qty,jdbcType=INTEGER}
+  </update>
+
+  <!--定义SPJ的resultMap-->
+  <resultMap id="SPJSMap" type="com.tjpu.zzk.model.Spj">
+    <id column="QTY" jdbcType="INTEGER" property="qty" />
+    <result column="JNO" jdbcType="INTEGER" property="jno" />
+    <result column="PNO" jdbcType="INTEGER" property="pno" />
+    <result column="SNO" jdbcType="INTEGER" property="sno" />
+
+    <!--配置spj对象中S集合的映射-->
+    <collection property="ss" ofType="com.tjpu.zzk.model.S">
+      <id column="SNO" jdbcType="INTEGER" property="sno" />
+      <result column="SNAME" jdbcType="VARCHAR" property="sname" />
+      <result column="STATUS" jdbcType="VARCHAR" property="status" />
+      <result column="CITY" jdbcType="VARCHAR" property="city" />
+    </collection>
+  </resultMap>
+
+  <select id="findSPJSAll" resultMap="SPJSMap">
+    select * from S s left outer join SPJ spj on s.SNO = spj.SNO
+  </select>
+</mapper>

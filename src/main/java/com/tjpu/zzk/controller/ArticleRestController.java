@@ -30,9 +30,6 @@ public class ArticleRestController {
             @ApiResponse(code = 200,message = "成功",response = AjaxResponse.class),
             @ApiResponse(code = 400,message = "用户输入错误",response = AjaxResponse.class),
             @ApiResponse(code = 500,message = "系统内部错误",response = AjaxResponse.class)
-
-
-
             //dfssdsfdssd
     })
 //    @RequestMapping(value = "/article",method = POST,produces = "application/json")
@@ -108,7 +105,8 @@ public class ArticleRestController {
      */
 //    @RequestMapping(value = "/article/{id}",method = PUT,produces = "application/json")
     @PutMapping("/article/{id}")
-    public AjaxResponse updateArticle(@PathVariable Long id ,@RequestBody ArticleVO article) {
+    public AjaxResponse updateArticle(@PathVariable Long id ,
+                                      @RequestBody ArticleVO article) {
 
         article.setId(id);
 //        log.info("updateArticle {}",article);
