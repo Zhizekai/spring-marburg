@@ -68,7 +68,7 @@
   <sql id="Base_Column_List">
     PNO, PNAME, COLOR, WEIGHT
   </sql>
-  <select id="selectByExample" parameterType="com.tjpu.zzk.model.PExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.tjpu.zzk.generator.PExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -100,7 +100,7 @@
     delete from p
     where PNO = #{PNO,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.tjpu.zzk.model.PExample">
+  <delete id="deleteByExample" parameterType="com.tjpu.zzk.generator.PExample">
     delete from p
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -137,7 +137,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.tjpu.zzk.model.PExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="com.tjpu.zzk.generator.PExample" resultType="java.lang.Long">
     select count(*) from p
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />

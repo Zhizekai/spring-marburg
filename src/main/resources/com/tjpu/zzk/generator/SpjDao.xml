@@ -68,7 +68,7 @@
   <sql id="Base_Column_List">
     QTY, JNO, PNO, SNO
   </sql>
-  <select id="selectByExample" parameterType="com.tjpu.zzk.model.SpjExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.tjpu.zzk.generator.SpjExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -100,7 +100,7 @@
     delete from SPJ
     where QTY = #{qty,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.tjpu.zzk.model.SpjExample">
+  <delete id="deleteByExample" parameterType="com.tjpu.zzk.generator.SpjExample">
     delete from SPJ
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -137,7 +137,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.tjpu.zzk.model.SpjExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="com.tjpu.zzk.generator.SpjExample" resultType="java.lang.Long">
     select count(*) from SPJ
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -211,7 +211,7 @@
       <result column="CITY" jdbcType="VARCHAR" property="city" />
     </collection>
   </resultMap>
-
+  <!--执行sql代码-->
   <select id="findSPJSAll" resultMap="SPJSMap">
     select * from S s left outer join SPJ spj on s.SNO = spj.SNO
   </select>

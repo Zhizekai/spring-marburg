@@ -1,10 +1,9 @@
 package com.tjpu.zzk.generator;
 
 import com.tjpu.zzk.model.S;
-import com.tjpu.zzk.model.SExample;
+
 import java.util.List;
 
-import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 /**

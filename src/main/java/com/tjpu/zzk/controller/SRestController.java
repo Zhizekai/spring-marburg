@@ -4,11 +4,9 @@ package com.tjpu.zzk.controller;
 import com.tjpu.zzk.generator.SDao;
 import com.tjpu.zzk.model.AjaxResponse;
 import com.tjpu.zzk.model.S;
-import com.tjpu.zzk.model.SExample;
+import com.tjpu.zzk.generator.SExample;
 import com.tjpu.zzk.service.SImpl;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
-import io.swagger.annotations.ApiResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 

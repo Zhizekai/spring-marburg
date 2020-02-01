@@ -68,7 +68,7 @@
   <sql id="Base_Column_List">
     SNO, SNAME, `STATUS`, CITY
   </sql>
-  <select id="selectByExample" parameterType="com.tjpu.zzk.model.SExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.tjpu.zzk.generator.SExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -100,7 +100,7 @@
     delete from S
     where SNO = #{sno,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.tjpu.zzk.model.SExample">
+  <delete id="deleteByExample" parameterType="com.tjpu.zzk.generator.SExample">
     delete from S
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -137,7 +137,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.tjpu.zzk.model.SExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="com.tjpu.zzk.generator.SExample" resultType="java.lang.Long">
     select count(*) from S
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />

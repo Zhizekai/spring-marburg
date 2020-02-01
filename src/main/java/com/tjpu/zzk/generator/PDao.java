@@ -1,10 +1,13 @@
 package com.tjpu.zzk.generator;
 
 import com.tjpu.zzk.model.P;
-import com.tjpu.zzk.model.PExample;
+
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
+/**
+ * Data Access Objects（DAO）
+ */
 public interface PDao {
     long countByExample(PExample example);
 

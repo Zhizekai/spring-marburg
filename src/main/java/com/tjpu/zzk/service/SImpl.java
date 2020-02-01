@@ -15,6 +15,7 @@ import java.util.List;
 
 /**
  * 实现类，把Dao的方法都实现出来
+ * impl 就是实现类的意思implements
  */
 @Slf4j
 @Service

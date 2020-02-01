@@ -1,8 +1,7 @@
 package com.tjpu.zzk.generator;
 
-import com.tjpu.zzk.model.S;
 import com.tjpu.zzk.model.Spj;
-import com.tjpu.zzk.model.SpjExample;
+
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
