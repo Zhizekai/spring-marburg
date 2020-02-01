@@ -1,7 +1,7 @@
 package com.tjpu.zzk.config.auth;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.zimug.basicserver.config.exception.AjaxResponse;
+import com.tjpu.zzk.config.exception.AjaxResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;

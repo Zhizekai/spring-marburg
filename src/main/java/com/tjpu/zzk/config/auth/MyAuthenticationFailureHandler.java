@@ -1,9 +1,9 @@
 package com.tjpu.zzk.config.auth;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.zimug.basicserver.config.exception.AjaxResponse;
-import com.zimug.basicserver.config.exception.CustomException;
-import com.zimug.basicserver.config.exception.CustomExceptionType;
+import com.tjpu.zzk.config.exception.AjaxResponse;
+import com.tjpu.zzk.config.exception.CustomException;
+import com.tjpu.zzk.config.exception.CustomExceptionType;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
