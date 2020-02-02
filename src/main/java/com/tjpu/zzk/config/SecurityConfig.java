@@ -30,49 +30,49 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 //
-//        http.csrf().disable()
-//             .formLogin()
-//                .loginPage("/login.html")
-//                .usernameParameter("uname")
-//                .passwordParameter("pword")
-//                .loginProcessingUrl("/login")
-//                //.defaultSuccessUrl("/index")
-//                //.failureUrl("/login.html")
-//                .successHandler(mySuthenticationSuccessHandler)
-//                .failureHandler(myAuthenticationFailureHandler)
-//             .and()
-//             .authorizeRequests()
-//                .antMatchers("/login.html","/login").permitAll()
-//                .antMatchers("/biz1","/biz2") //需要对外暴露的资源路径
-//                    .hasAnyAuthority("ROLE_user","ROLE_admin")  //user角色和admin角色都可以访问
-//                //.antMatchers("/syslog","/sysuser")
-//                    //.hasAnyRole("admin")  //admin角色可以访问
-//                    //.hasAnyAuthority("ROLE_admin")
-//                .antMatchers("/syslog").hasAuthority("sys:log")
-//                .antMatchers("/sysuser").hasAuthority("sys:user")
-//                .anyRequest().authenticated()
-//             .and().sessionManagement()
-//                .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
-//                .invalidSessionUrl("/login.html")
-//                .sessionFixation().migrateSession()
-//                .maximumSessions(1)
-//                .maxSessionsPreventsLogin(false)
-//                .expiredSessionStrategy(new MyExpiredSessionStrategy());
-
-
-        http.csrf().disable()//跨站防御攻击
-                .formLogin().loginPage("/login.html")//默认在login访问
+        http.csrf().disable()
+             .formLogin()
+                .loginPage("/login.html")
+                .usernameParameter("uname")
+                .passwordParameter("pword")
                 .loginProcessingUrl("/login")
-                .defaultSuccessUrl("/index").and()
-
-                //权限控制
-                .authorizeRequests()
-                .antMatchers("/login.html","login").permitAll()//这两个不需要登陆就能被访问
+                //.defaultSuccessUrl("/index")
+                //.failureUrl("/login.html")
+                .successHandler(mySuthenticationSuccessHandler)
+                .failureHandler(myAuthenticationFailureHandler)
+             .and()
+             .authorizeRequests()
+                .antMatchers("/login.html","/login").permitAll()
                 .antMatchers("/biz1","/biz2") //需要对外暴露的资源路径
-                .hasAnyAuthority("ROLE_user","ROLE_admin")  //user角色和admin角色都可以访问
-                .antMatchers("/syslog","/sysuser") //这两个需要admin权限
-                .hasAnyRole("admin")  //admin角色可以访问
-                .anyRequest().authenticated();
+                    .hasAnyAuthority("ROLE_user","ROLE_admin")  //user角色和admin角色都可以访问
+                //.antMatchers("/syslog","/sysuser")
+                    //.hasAnyRole("admin")  //admin角色可以访问
+                    //.hasAnyAuthority("ROLE_admin")
+                .antMatchers("/syslog").hasAuthority("sys:log")
+                .antMatchers("/sysuser").hasAuthority("sys:user")
+                .anyRequest().authenticated()
+             .and().sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+                .invalidSessionUrl("/login.html")
+                .sessionFixation().migrateSession()
+                .maximumSessions(1)
+                .maxSessionsPreventsLogin(false)
+                .expiredSessionStrategy(new MyExpiredSessionStrategy());
+
+
+//        http.csrf().disable()//跨站防御攻击
+//                .formLogin().loginPage("/login.html")//默认在login访问
+//                .loginProcessingUrl("/login")
+//                .defaultSuccessUrl("/index").and()
+//
+//                //权限控制
+//                .authorizeRequests()
+//                .antMatchers("/login.html","login").permitAll()//这两个不需要登陆就能被访问
+//                .antMatchers("/biz1","/biz2") //需要对外暴露的资源路径
+//                .hasAnyAuthority("ROLE_user","ROLE_admin")  //user角色和admin角色都可以访问
+//                .antMatchers("/syslog","/sysuser") //这两个需要admin权限
+//                .hasAnyRole("admin")  //admin角色可以访问
+//                .anyRequest().authenticated();
     }
 
 
