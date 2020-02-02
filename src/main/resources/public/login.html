@@ -22,6 +22,7 @@
             alert('用户名或密码不能为空');
             return;
         }
+        console.log(password,username);
         $.ajax({
             type: "POST",
             url: "/login",
@@ -33,6 +34,7 @@
                 if(json.isok){
                     location.href = json.data;
                 }else{
+                    console.log(json)
                     alert(json.message)
                 }
 
