@@ -14,9 +14,9 @@ spring:
     template-loader-path: classpath:/templates/
   security:
     loginType: JSON
-#    user:
-#      name: admin
-#      password: admin
+    user:
+      name: admin
+      password: admin
 #mybatis:
 #  mapper-locations: classpath:generator/*.xml
 logging:
