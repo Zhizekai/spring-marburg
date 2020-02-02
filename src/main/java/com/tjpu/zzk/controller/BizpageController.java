@@ -2,15 +2,16 @@ package com.tjpu.zzk.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class BizpageController {
 
     // 登录
-    /*@PostMapping("/login")
+    @PostMapping("/login")
     public String index(String username,String password) {
         return "index";
-    }*/
+    }
 
     // 登录成功之后的首页
     @GetMapping("/index")

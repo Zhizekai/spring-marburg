@@ -60,38 +60,56 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                .expiredSessionStrategy(new MyExpiredSessionStrategy());
 
 
-        http.httpBasic().and().authorizeRequests().anyRequest()
-                //所有情趣必须都登陆
-                .authenticated();
+        http.csrf().disable()//跨站防御攻击
+                .formLogin().loginPage("/login.html")//默认在login访问
+                .loginProcessingUrl("/login")
+                .defaultSuccessUrl("/index").and()
+
+                //权限控制
+                .authorizeRequests()
+                .antMatchers("/login.html","login").permitAll()//这两个不需要登陆就能被访问
+                .antMatchers("/biz1","/biz2") //需要对外暴露的资源路径
+                .hasAnyAuthority("ROLE_user","ROLE_admin")  //user角色和admin角色都可以访问
+                .antMatchers("/syslog","/sysuser") //这两个需要admin权限
+                .hasAnyRole("admin")  //admin角色可以访问
+                .anyRequest().authenticated();
     }
-//
-//
-//    @Override
-//    public void configure(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.inMemoryAuthentication()
-//                .withUser("user")
-//                .password(passwordEncoder().encode("123456"))
-//                .roles("user")
-//                    .and()
-//                .withUser("admin")
-//                .password(passwordEncoder().encode("123456"))
+
+
+    @Override
+    public void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.inMemoryAuthentication()
+                .withUser("user")
+                .password(passwordEncoder().encode("123456"))
+                .roles("user")
+                    .and()
+                .withUser("admin")
+                .password(passwordEncoder().encode("123456"))
 //                .authorities("sys:log","sys:user")
-//                //.roles("admin")
-//                    .and()
-//                .passwordEncoder(passwordEncoder());//配置BCrypt加密
-//    }
-//
-//
-//    @Bean
-//    public PasswordEncoder passwordEncoder(){
-//        return new BCryptPasswordEncoder();
-//    }
-//
-//    @Override
-//    public void configure(WebSecurity web) {
-//        //将项目中静态资源路径开放出来
-//        web.ignoring()
-//           .antMatchers( "/css/**", "/fonts/**", "/img/**", "/js/**");
-//    }
+                .roles("admin")
+                    .and()
+                .passwordEncoder(passwordEncoder());//配置BCrypt加密
+    }
+
+
+    /**
+     * 用户名和密码进行加密
+     * @return 加密函数
+     */
+    @Bean
+    public PasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder();
+    }
+
+    /**
+     * 静态资源不需要权限
+     * @param web web
+     */
+    @Override
+    public void configure(WebSecurity web) {
+        //将项目中静态资源路径开放出来
+        web.ignoring()
+           .antMatchers( "/css/**", "/fonts/**", "/img/**", "/js/**");
+    }
 
 }
