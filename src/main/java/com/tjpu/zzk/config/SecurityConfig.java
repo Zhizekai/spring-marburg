@@ -86,7 +86,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .withUser("admin")
                 .password(passwordEncoder().encode("123456"))
                 .authorities("sys:log","sys:user")
-//                .roles("admin")
+                .roles("admin")
                     .and()
                 .passwordEncoder(passwordEncoder());//配置BCrypt加密
     }
