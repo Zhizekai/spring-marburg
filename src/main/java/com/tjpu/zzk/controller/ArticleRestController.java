@@ -16,7 +16,7 @@ import java.util.Date;
 public class ArticleRestController {
 
     @Resource
-    ArticleMybatisRestServiceImpl articleRestService;
+    ArticleMybatisRestServiceImpl ArticleMybatisRestServiceImpl;
 
 
     /**
@@ -38,7 +38,7 @@ public class ArticleRestController {
 
 //        log.info("saveArticle {}",article);
 
-        articleRestService.saveArticle(article);
+        ArticleMybatisRestServiceImpl.saveArticle(article);
         return AjaxResponse.success(article);
     }
 
@@ -92,7 +92,7 @@ public class ArticleRestController {
 
 //        log.info("deleteArticle {}",id);
 
-        articleRestService.deleteArticle(id);
+        ArticleMybatisRestServiceImpl.deleteArticle(id);
         return AjaxResponse.success(id);
 
     }
@@ -110,7 +110,7 @@ public class ArticleRestController {
 
         article.setId(id);
 //        log.info("updateArticle {}",article);
-        articleRestService.updateArticle(article);
+        ArticleMybatisRestServiceImpl.updateArticle(article);
         return AjaxResponse.success(id);
 
     }
@@ -128,7 +128,7 @@ public class ArticleRestController {
 //                .id(1L).author("zimuge").content("chichichic")
 //                .createTime(new Date()).title("t1").build();
 
-        return AjaxResponse.success(articleRestService.getArticle(id));
+        return AjaxResponse.success(ArticleMybatisRestServiceImpl.getArticle(id));
     }
 
     /**
@@ -143,6 +143,6 @@ public class ArticleRestController {
 //                .id(1L).author("zimuge").content("chichichic")
 //                .createTime(new Date()).title("t1").build();
 
-        return AjaxResponse.success(articleRestService.getAll());
+        return AjaxResponse.success(ArticleMybatisRestServiceImpl.getAll());
     }
 }

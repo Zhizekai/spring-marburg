@@ -8,6 +8,8 @@ server:
         secure: false
 
 spring:
+#  aop:
+#    proxy-target-class: true
   datasource:
     url: jdbc:mysql://106.15.95.26:3306/zzk?useUnicode=true&characterEncoding=utf8&useSSL=false
     username: zzk
