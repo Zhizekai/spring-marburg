@@ -6,10 +6,10 @@ import lombok.Data;
 public class AjaxResponse {
 
 
-    private boolean isok;
-    private int code;   
-    private String message;
-    private Object data;
+    private boolean isok;  //响应是否成功
+    private int code;    //状态码
+    private String message;  //消息
+    private Object data;  //数据
 
     private AjaxResponse() {
 
@@ -24,9 +24,9 @@ public class AjaxResponse {
         if(e.getCode() == CustomExceptionType.USER_INPUT_ERROR.getCode()){
             resultBean.setMessage(e.getMessage());
         }else if(e.getCode() == CustomExceptionType.SYSTEM_ERROR.getCode()){
-            resultBean.setMessage(e.getMessage() + ",系统出现异常，请联系管理员电话：1375610xxxx进行处理!");
+            resultBean.setMessage(e.getMessage() + ",系统出现异常，请联系管理员电话：18722647547进行处理!");
         }else{
-            resultBean.setMessage("系统出现未知异常，请联系管理员电话：13756108xxx进行处理!");
+            resultBean.setMessage("系统出现未知异常，请联系管理员电话：18722647547进行处理!");
         }
         return resultBean;
     }

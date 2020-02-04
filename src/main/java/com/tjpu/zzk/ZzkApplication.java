@@ -7,7 +7,7 @@ import org.springframework.boot.web.servlet.ServletComponentScan;
 
 @SpringBootApplication
 @ServletComponentScan
-@MapperScan(basePackages = {"com.tjpu.zzk.generator"})  //mapper/Dao自动扫描路径
+@MapperScan(basePackages = {"com.tjpu.zzk."})  //mapper/Dao自动扫描路径
 public class ZzkApplication {
 
 	public static void main(String[] args) {

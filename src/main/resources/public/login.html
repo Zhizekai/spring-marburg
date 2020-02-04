@@ -7,52 +7,52 @@
 </head>
 <body>
 <h1>字母哥业务系统登录</h1>
-<!--<form action="/login" method="post">-->
-<!--    <span>用户名称</span><input type="text" name="uname" id="username"/> <br>-->
-<!--    <span>用户密码</span><input type="password" name="pword" id="password"/> <br>-->
-<!--    <input type="button" onclick="login()" value="登陆">-->
-<!--</form>-->
+<form action="/login" method="post">
+    <span>用户名称</span><input type="text" name="uname" id="username"/> <br>
+    <span>用户密码</span><input type="password" name="pword" id="password"/> <br>
+    <input type="button" onclick="login()" value="登陆">
+</form>
 
 
 <!--TODO 改成耦合度低的，未来可以改成耦合度低的-->
-<form action="/login" method="post">
-<span>用户名称</span><input type="text" name="username" /> <br>
-<span>用户密码</span><input type="password" name="password" /> <br>
-<input type="submit" value="登陆">
-
-
+<!--<form action="/login" method="post">-->
+<!--<span>用户名称</span><input type="text" name="username" /> <br>-->
+<!--<span>用户密码</span><input type="password" name="password" /> <br>-->
+<!--<input type="submit" value="登陆">-->
 <!--</form>-->
-<!--<script>-->
-<!--    function login() {-->
-<!--        var username = $("#username").val();-->
-<!--        var password = $("#password").val();-->
-<!--        if (username === "" || password === "") {-->
-<!--            alert('用户名或密码不能为空');-->
-<!--            return;-->
-<!--        }-->
-<!--        console.log(password,username);-->
-<!--        $.ajax({-->
-<!--            type: "POST",-->
-<!--            url: "/login",-->
-<!--            data: {-->
-<!--                "uname": username,-->
-<!--                "pword": password-->
-<!--            },-->
-<!--            success: function (json) {-->
-<!--                if(json.isok){-->
-<!--                    location.href = json.data;-->
-<!--                }else{-->
-<!--                    console.log(json)-->
-<!--                    alert(json.message)-->
-<!--                }-->
 
-<!--            },-->
-<!--            error: function (e) {-->
-<!--                console.log(e.responseText);-->
-<!--            }-->
-<!--        });-->
-<!--    }-->
-<!--</script>-->
+
+<script>
+    function login() {
+        var username = $("#username").val();
+        var password = $("#password").val();
+        if (username === "" || password === "") {
+            alert('用户名或密码不能为空');
+            return;
+        }
+        console.log(password,username);
+        $.ajax({
+            type: "POST",
+            url: "/login",
+            data: {
+                "uname": username,
+                "pword": password
+            },
+            success: function (json) {
+                if(json.isok){
+                    location.href = json.data;
+                }else{
+                    alert(json.message)
+                }
+                // alert(JSON.stringify(json))
+
+            },
+            error: function (e) {
+                console.log(e.responseText);
+            }
+        });
+    }
+</script>
 
 </body>
 </html>

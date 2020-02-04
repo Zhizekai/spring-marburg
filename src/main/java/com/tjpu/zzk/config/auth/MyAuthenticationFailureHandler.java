@@ -32,11 +32,11 @@ public class MyAuthenticationFailureHandler extends SimpleUrlAuthenticationFailu
             response.setContentType("application/json;charset=UTF-8");
             response.getWriter().write(objectMapper.writeValueAsString(
                     AjaxResponse.error(new CustomException(
-                            CustomExceptionType.USER_INPUT_ERROR,
+                            CustomExceptionType.USER_INPUT_ERROR, //用户输入错误
                             "用户名或者密码输入错误!"))
             ));
         }else{
-            //跳转到登陆页面
+            //父类中，跳转到登陆页面
             super.onAuthenticationFailure(request,response,exception);
         }
 

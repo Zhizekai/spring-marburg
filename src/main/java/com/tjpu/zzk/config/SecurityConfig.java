@@ -3,6 +3,7 @@ package com.tjpu.zzk.config;
 import com.tjpu.zzk.config.auth.MyAuthenticationFailureHandler;
 import com.tjpu.zzk.config.auth.MyAuthenticationSuccessHandler;
 import com.tjpu.zzk.config.auth.MyExpiredSessionStrategy;
+import com.tjpu.zzk.config.auth.ZzkAuthSuccessHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -80,17 +81,27 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //            .anyRequest().authenticated();
 //    }
 //
+    @Resource
+    ZzkAuthSuccessHandler zzkAuthSuccessHandler;
 
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+
+
+
         http.csrf().disable() //禁用跨站csrf攻击防御，后面的章节会专门讲解
                 .formLogin()
                 .loginPage("/login.html")//用户未登录时，访问任何资源都转跳到该路径，即登录页面
                 .loginProcessingUrl("/login")//登录表单form中action的地址，也就是处理认证请求的路径
-//                .usernameParameter("username")///登录表单form中用户名输入框input的name名，不修改的话默认是username
-//                .passwordParameter("password")//form中密码输入框input的name名，不修改的话默认是password
-                .defaultSuccessUrl("/index")//登录认证成功后默认转跳的路径
+                .usernameParameter("uname")///登录表单form中用户名输入框input的name名，不修改的话默认是username
+                .passwordParameter("pword")//form中密码输入框input的name名，不修改的话默认是password
+
+//                .defaultSuccessUrl("/index")//登录认证成功后默认转跳的路径 和successHandler只能选一个
+//                .failureForwardUrl("/login.html")
+
+                .successHandler(zzkAuthSuccessHandler)
+                .failureHandler(myAuthenticationFailureHandler)
                 .and()
                 .authorizeRequests()
                 .antMatchers("/login.html","/login").permitAll()//不需要通过登录验证就可以被访问的资源路径
@@ -100,7 +111,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .hasAnyRole("admin")  //admin角色可以访问
                 //.antMatchers("/syslog").hasAuthority("sys:log")
                 //.antMatchers("/sysuser").hasAuthority("sys:user")
-                .anyRequest().authenticated();
+                .anyRequest().authenticated()
+        .and()
+                //session配置
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)//其中一种状态
+                .invalidSessionUrl("/login.html") //session超时跳转到登陆界面
+                .sessionFixation().migrateSession()
+                .maximumSessions(1)
+                .maxSessionsPreventsLogin(false)
+                .expiredSessionStrategy(new MyExpiredSessionStrategy())
+        ;
     }
     /**
      * 静态用户名和配置

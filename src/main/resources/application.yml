@@ -1,5 +1,12 @@
-#server:
+server:
 #  port: 8000
+  servlet:
+    session:
+      timeout: 10s # 强制最短一分钟，其实配置的还是一分钟，一分钟后session失效
+      cookie:
+        http-only: true
+        secure: false
+
 spring:
   datasource:
     url: jdbc:mysql://106.15.95.26:3306/zzk?useUnicode=true&characterEncoding=utf8&useSSL=false
@@ -13,10 +20,11 @@ spring:
     charset: UTF-8 # 文件编码
     template-loader-path: classpath:/templates/
   security:
-    loginType: JSON
-    user:
-      name: admin
-      password: admin
+
+    loginType: JSON  #控制输出格式
+#    user:
+#      name: admin
+#      password: admin
 #mybatis:
 #  mapper-locations: classpath:generator/*.xml
 logging:
