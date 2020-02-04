@@ -108,8 +108,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .hasAnyAuthority("ROLE_user","ROLE_admin")  //user角色和admin角色都可以访问
 //                .antMatchers("/syslog","/sysuser")
 //                .hasAnyRole("admin")  //admin角色可以访问
-                .antMatchers("/syslog").hasAuthority("/sys:log")  //系统日志
-                .antMatchers("/sysuser").hasAuthority("/sysuser")  //系统用户
+                .antMatchers("/syslog").hasAuthority("/sys_log")  //系统日志，什么样的路径需要什么样的权限
+                .antMatchers("/sysuser").hasAuthority("/sys_user")  //系统用户，/sysuser需要/sys_user 权限
                 .anyRequest().authenticated()
         .and()
                 //session配置
