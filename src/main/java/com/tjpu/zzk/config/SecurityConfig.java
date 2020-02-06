@@ -4,19 +4,25 @@ import com.tjpu.zzk.config.auth.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
 import javax.annotation.Resource;
+import javax.sql.DataSource;
+import javax.xml.crypto.Data;
 
 /**
  * spring Security配置
  */
 @Configuration
+@EnableGlobalMethodSecurity(prePostEnabled =  true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Resource
@@ -25,6 +31,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Resource
     MyAuthenticationFailureHandler myAuthenticationFailureHandler;
 
+
+    @Resource
+    MyLogoutSuccessHandler myLogoutSuccessHandler;
+    @Resource
+    private DataSource dataSource; //yml文件里配置的数据源
+    //源代码
 //    @Override
 //    protected void configure(HttpSecurity http) throws Exception {
 //
@@ -56,26 +68,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 ////                .maximumSessions(1)
 ////                .maxSessionsPreventsLogin(false)
 ////                .expiredSessionStrategy(new MyExpiredSessionStrategy());
-//
-//       http.csrf().disable() //禁用跨站csrf攻击防御，后面的章节会专门讲解
-//            .formLogin()
-//            .loginPage("/login.html")//用户未登录时，访问任何资源都转跳到该路径，即登录页面
-//            .usernameParameter("username")///登录表单form中用户名输入框input的name名，不修改的话默认是username
-//            .passwordParameter("password")//form中密码输入框input的name名，不修改的话默认是password
-//               .loginProcessingUrl("/login")//登录表单form中action的地址，也就是处理认证请求的路径
-//            .defaultSuccessUrl("/index")//登录认证成功后默认转跳的路径
-//
-//
-//        .and()
-//            .authorizeRequests()
-//            .antMatchers("/login.html","/login").permitAll()//不需要通过登录验证就可以被访问的资源路径
-//            .antMatchers("/biz1","/biz2") //需要对外暴露的资源路径
-//                .hasAnyAuthority("ROLE_user","ROLE_admin")  //user角色和admin角色都可以访问
-//            .antMatchers("/syslog","/sysuser")
-//                .hasAnyRole("admin")  //admin角色可以访问
-////            .antMatchers("/syslog").hasAuthority("sys:log")
-////            .antMatchers("/sysuser").hasAuthority("sys:user")
-//            .anyRequest().authenticated();
 //    }
 //
     @Resource
@@ -95,25 +87,43 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginProcessingUrl("/login")//登录表单form中action的地址，也就是处理认证请求的路径
                 .usernameParameter("uname")///登录表单form中用户名输入框input的name名，不修改的话默认是username
                 .passwordParameter("pword")//form中密码输入框input的name名，不修改的话默认是password
-
 //                .defaultSuccessUrl("/index")//登录认证成功后默认转跳的路径 和successHandler只能选一个
 //                .failureForwardUrl("/login.html")
-
                 .successHandler(zzkAuthSuccessHandler)
                 .failureHandler(myAuthenticationFailureHandler)
-                .and()
-                .authorizeRequests()
-                .antMatchers("/login.html","/login").permitAll()//不需要通过登录验证就可以被访问的资源路径
-                .antMatchers("/biz1","/biz2") //需要对外暴露的资源路径
+
+                //记住密码配置
+                .and().rememberMe()
+                .rememberMeParameter("remember-me-new") //和参数对应
+                .rememberMeCookieName("remember-me-cookie") //存在浏览器cookie的名称
+                .tokenValiditySeconds(2 * 24 * 60 * 60)
+                .tokenRepository(persistentTokenRepository())  //把rememberme令牌 签名都存进数据库
+
+                //权限设置
+                .and().authorizeRequests()
+                .antMatchers("/login.html","/login","/aftersignout.html").permitAll()//不需要通过登录验证就可以被访问的资源路径
+                .antMatchers("/index").authenticated() //登陆就能看
+                .anyRequest().access("@rbacService.hasPermission(request,authentication)")
+
+                //退出配置
+                .and().logout()
+                .logoutUrl("/signout")
+//                .logoutSuccessUrl("/aftersignout.html") //退出成功跳转到这里
+                .deleteCookies("JSESSIONID")
+                .logoutSuccessHandler(myLogoutSuccessHandler)
+
+
+                //静态加载，需要改成动态加载
+                /*.antMatchers("/biz1","/biz2") //需要对外暴露的资源路径
                 .hasAnyAuthority("ROLE_user","ROLE_admin")  //user角色和admin角色都可以访问
-//                .antMatchers("/syslog","/sysuser")
-//                .hasAnyRole("admin")  //admin角色可以访问
+                .antMatchers("/syslog","/sysuser")
+                .hasAnyRole("admin")  //admin角色可以访问
                 .antMatchers("/syslog").hasAuthority("/sys_log")  //系统日志，什么样的路径需要什么样的权限
                 .antMatchers("/sysuser").hasAuthority("/sys_user")  //系统用户，/sysuser需要/sys_user 权限
-                .anyRequest().authenticated()
-        .and()
+                .anyRequest().authenticated()*/
+
                 //session配置
-                .sessionManagement()
+                .and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)//其中一种状态
                 .invalidSessionUrl("/login.html") //session超时跳转到登陆界面
                 .sessionFixation().migrateSession()
@@ -164,7 +174,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) {
         //将项目中静态资源路径开放出来
         web.ignoring()
-           .antMatchers( "/css/**", "/fonts/**", "/img/**", "/js/**");
+           .antMatchers( "/css/**", "/fonts/**", "/img/**", "/js/**",
+                   "/**/*.css",
+                   "/**/*.js",
+                   "/swagger-ui.html",
+                   "/web","/webjars/**",
+                   "/swagger-resources/**",
+                   "/v2/**",
+                   "/favicon.ico");
+    }
+
+    @Bean
+    public PersistentTokenRepository persistentTokenRepository() {
+        JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();
+        tokenRepository.setDataSource(dataSource);
+        return tokenRepository;
     }
 
 }

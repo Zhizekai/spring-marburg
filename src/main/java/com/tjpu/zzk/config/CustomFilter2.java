@@ -9,7 +9,7 @@ import java.io.IOException;
 //注册器名称为customFilter,拦截的url为所有
 //@WebFilter(filterName="customFilter",urlPatterns={"/*"})
 @Slf4j
-public class CustomFilter implements Filter {
+public class CustomFilter2 implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -19,7 +19,7 @@ public class CustomFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
-        log.info("customFilter 请求处理之前");
+        log.info("customFilter2 请求处理之前");
         //对request、response进行一些预处理
         // 比如设置请求编码
         // request.setCharacterEncoding("UTF-8");
@@ -28,7 +28,7 @@ public class CustomFilter implements Filter {
         //链路 直接传给下一个过滤器
         chain.doFilter(request, response);
 
-        log.info("customFilter 请求处理之后");
+        log.info("customFilter2 请求处理之后");
     }
 
     @Override

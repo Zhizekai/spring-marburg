@@ -1,12 +1,17 @@
 package com.tjpu.zzk.controller;
 
+import com.tjpu.zzk.service.MethodELService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.annotation.Resource;
+
 @Controller
 public class BizpageController {
 
+    @Resource
+    MethodELService methodELService;
     // 登录
 //    @PostMapping("/login")
 //    public String index(String username,String password) {
@@ -34,6 +39,8 @@ public class BizpageController {
     // 具体业务一
     @GetMapping("/biz1")
     public String updateOrder() {
+
+        methodELService.findAll();
         return "biz1";
     }
 
