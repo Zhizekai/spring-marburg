@@ -1,23 +1,22 @@
 package com.tjpu.zzk.service;
 
-import com.tjpu.zzk.generator.SDao;
-import com.tjpu.zzk.model.S;
+import com.tjpu.zzk.model.SVO;
 
 import java.util.List;
 
 public interface SRestService  {
 
-    S saveS(S s);
+    SVO saveS(SVO SVO);
     void deleteS(Integer sno);
-    void updateS(S s);
+    void updateS(SVO SVO);
 
     /**
      * 获取一个S
      * @param sno s的主键
      * @return 一个S对象
      */
-    S getS(Integer sno);
-    List<S> getAll();
+    SVO getS(Integer sno);
+    List<SVO> getAll();
 
 
 

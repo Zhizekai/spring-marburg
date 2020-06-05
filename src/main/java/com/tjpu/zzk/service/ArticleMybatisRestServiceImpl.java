@@ -1,6 +1,6 @@
 package com.tjpu.zzk.service;
 
-import com.tjpu.zzk.generator.zzk.Article;
+import com.tjpu.zzk.generator.Article;
 import com.tjpu.zzk.generator.ArticleMapper;
 import com.tjpu.zzk.model.ArticleVO;
 import com.tjpu.zzk.utils.DozerUtils;

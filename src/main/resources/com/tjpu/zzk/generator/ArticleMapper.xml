@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.tjpu.zzk.generator.ArticleMapper">
-  <resultMap id="BaseResultMap" type="com.tjpu.zzk.generator.zzk.Article">
+  <resultMap id="BaseResultMap" type="com.tjpu.zzk.generator.Article">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="author" jdbcType="VARCHAR" property="author" />
     <result column="content" jdbcType="VARCHAR" property="content" />
@@ -69,7 +69,7 @@
   <sql id="Base_Column_List">
     id, author, content, create_time, title
   </sql>
-  <select id="selectByExample" parameterType="com.tjpu.zzk.generator.zzk.ArticleExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.tjpu.zzk.generator.ArticleExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -101,19 +101,19 @@
     delete from article
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="com.tjpu.zzk.generator.zzk.ArticleExample">
+  <delete id="deleteByExample" parameterType="com.tjpu.zzk.generator.ArticleExample">
     delete from article
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.tjpu.zzk.generator.zzk.Article" useGeneratedKeys="true">
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.tjpu.zzk.generator.Article" useGeneratedKeys="true">
     insert into article (author, content, create_time, 
       title)
     values (#{author,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
       #{title,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.tjpu.zzk.generator.zzk.Article" useGeneratedKeys="true">
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.tjpu.zzk.generator.Article" useGeneratedKeys="true">
     insert into article
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="author != null">
@@ -144,7 +144,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.tjpu.zzk.generator.zzk.ArticleExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="com.tjpu.zzk.generator.ArticleExample" resultType="java.lang.Long">
     select count(*) from article
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -184,7 +184,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.tjpu.zzk.generator.zzk.Article">
+  <update id="updateByPrimaryKeySelective" parameterType="com.tjpu.zzk.generator.Article">
     update article
     <set>
       <if test="author != null">
@@ -202,7 +202,7 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.tjpu.zzk.generator.zzk.Article">
+  <update id="updateByPrimaryKey" parameterType="com.tjpu.zzk.generator.Article">
     update article
     set author = #{author,jdbcType=VARCHAR},
       content = #{content,jdbcType=VARCHAR},

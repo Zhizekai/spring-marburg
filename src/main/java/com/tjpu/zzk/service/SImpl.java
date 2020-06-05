@@ -2,7 +2,7 @@ package com.tjpu.zzk.service;
 
 import com.tjpu.zzk.generator.SDao;
 import com.tjpu.zzk.generator.SpjDao;
-import com.tjpu.zzk.model.S;
+import com.tjpu.zzk.model.SVO;
 import com.tjpu.zzk.model.Spj;
 import com.tjpu.zzk.utils.DozerUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -32,13 +32,13 @@ public class SImpl implements SRestService {
 
     /**
      * 保存S
-     * @param s S对象
+     * @param SVO S对象
      * @return null
      */
     @Override
-    public S saveS(S s) {
+    public SVO saveS(SVO SVO) {
 
-        S SPO = dozerMapper.map(s,S.class);
+        SVO SPO = dozerMapper.map(SVO, SVO.class);
 
         sDao.insert(SPO);
         return null;
@@ -51,18 +51,18 @@ public class SImpl implements SRestService {
     }
 
     @Override
-    public void updateS(S s) {
+    public void updateS(SVO SVO) {
 
-        S SPO = dozerMapper.map(s,S.class);
+        SVO SPO = dozerMapper.map(SVO, SVO.class);
 
         sDao.updateByPrimaryKeySelective(SPO);
     }
 
     @Override
-    public S getS(Integer sno) {
+    public SVO getS(Integer sno) {
 
 
-        return dozerMapper.map(sDao.selectByPrimaryKey(sno),S.class);
+        return dozerMapper.map(sDao.selectByPrimaryKey(sno), SVO.class);
     }
 
     public List<Spj> getSpj() {
@@ -71,9 +71,9 @@ public class SImpl implements SRestService {
     }
 
     @Override
-    public List<S> getAll() {
-        List<S> ss = sDao.selectByExample(null);
-        return DozerUtils.mapList(ss,S.class);
+    public List<SVO> getAll() {
+        List<SVO> SVOS = sDao.selectByExample(null);
+        return DozerUtils.mapList(SVOS, SVO.class);
     }
 
 

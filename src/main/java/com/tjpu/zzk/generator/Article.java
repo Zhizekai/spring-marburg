@@ -1,4 +1,4 @@
-package com.tjpu.zzk.generator.zzk;
+package com.tjpu.zzk.generator;
 
 import java.io.Serializable;
 import java.util.Date;

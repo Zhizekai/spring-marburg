@@ -27,7 +27,7 @@
 #
 # Optional ENV vars
 # -----------------
-#   M2_HOME - location of maven2's installed home dir
+#   M2_HOME - location of maven2'SVO installed home dir
 #   MAVEN_OPTS - parameters passed to the Java VM when running Maven
 #     e.g. to debug Maven itself, use
 #       set MAVEN_OPTS=-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8000
@@ -73,7 +73,7 @@ if [ -z "$JAVA_HOME" ] ; then
 fi
 
 if [ -z "$M2_HOME" ] ; then
-  ## resolve links - $0 may be a link to maven's home
+  ## resolve links - $0 may be a link to maven'SVO home
   PRG="$0"
 
   # need this for relative symlinks
@@ -139,7 +139,7 @@ fi
 if [ -z "$JAVACMD" ] ; then
   if [ -n "$JAVA_HOME"  ] ; then
     if [ -x "$JAVA_HOME/jre/sh/java" ] ; then
-      # IBM's JDK on AIX uses strange locations for the executables
+      # IBM'SVO JDK on AIX uses strange locations for the executables
       JAVACMD="$JAVA_HOME/jre/sh/java"
     else
       JAVACMD="$JAVA_HOME/bin/java"
@@ -190,7 +190,7 @@ find_maven_basedir() {
 # concatenates all lines of a file
 concat_lines() {
   if [ -f "$1" ]; then
-    echo "$(tr -s '\n' ' ' < "$1")"
+    echo "$(tr -SVO '\n' ' ' < "$1")"
   fi
 }
 

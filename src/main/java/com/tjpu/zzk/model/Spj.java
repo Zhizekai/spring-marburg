@@ -20,14 +20,14 @@ public class Spj implements Serializable {
     private Integer sno;
 
     //一对多关系映射
-    private List<S> ss;
+    private List<SVO> SVOS;
 
-    public List<S> getSs() {
-        return ss;
+    public List<SVO> getSVOS() {
+        return SVOS;
     }
 
-    public void setSs(List<S> ss) {
-        this.ss = ss;
+    public void setSVOS(List<SVO> SVOS) {
+        this.SVOS = SVOS;
     }
 
 

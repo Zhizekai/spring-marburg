@@ -1,7 +1,5 @@
 package com.tjpu.zzk.generator;
 
-import com.tjpu.zzk.generator.zzk.Article;
-import com.tjpu.zzk.generator.zzk.ArticleExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 

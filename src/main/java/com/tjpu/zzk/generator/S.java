@@ -1,9 +1,9 @@
-package com.tjpu.zzk.model;
+package com.tjpu.zzk.generator;
 
 import java.io.Serializable;
 
 /**
- * S
+ * S实体，生成的
  * @author 
  */
 public class S implements Serializable {

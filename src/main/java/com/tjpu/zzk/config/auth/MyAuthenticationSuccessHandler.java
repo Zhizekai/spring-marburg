@@ -18,6 +18,7 @@ public class MyAuthenticationSuccessHandler extends SavedRequestAwareAuthenticat
     @Value("${spring.security.loginType}")
     private String loginType;
 
+    //jackson工具类，将对象转成字符串
     private static ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
@@ -29,7 +30,7 @@ public class MyAuthenticationSuccessHandler extends SavedRequestAwareAuthenticat
         if(loginType.equalsIgnoreCase("JSON")){
             response.setContentType("application/json;charset=UTF-8");
             response.getWriter().write(objectMapper.writeValueAsString(
-                    AjaxResponse.success("/index")
+                    AjaxResponse.success("/index")  //登陆成功之后默认跳转
             ));
         }else{
             //跳转到登陆之前请求的页面

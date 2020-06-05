@@ -4,7 +4,7 @@ server:
     session:
       timeout: 10s # 强制最短一分钟，其实配置的还是一分钟，一分钟后session失效
       cookie:
-        http-only: true
+        http-only: true  # 浏览器无法访问cookie
         secure: false
 
 spring:
@@ -22,7 +22,6 @@ spring:
     charset: UTF-8 # 文件编码
     template-loader-path: classpath:/templates/
   security:
-
     loginType: JSON  #控制输出格式
 #    user:
 #      name: admin

@@ -8,6 +8,9 @@
 <body>
 <h1>字母哥业务系统登录</h1>
 <form action="/login" method="post">
+    <img src="/kaptcha" id="kaptcha" width="110px" height="40px"/> <br>
+    <span>验证码</span> <input type="text" name="captchaCode" id="captchaCode" > <br>
+
     <span>用户名称</span><input type="text" name="uname" id="username"/> <br>
     <span>用户密码</span><input type="password" name="pword" id="password"/> <br>
     <input type="button" onclick="login()" value="登陆">
@@ -25,9 +28,17 @@
 
 
 <script>
+
+    window.onload=function(){
+        var kaptchaImg = document.getElementById("kaptcha");
+        kaptchaImg.onclick = function(){
+            kaptchaImg.src = "/kaptcha?" + Math.floor(Math.random() * 100)
+        }
+    };
     function login() {
         var username = $("#username").val();
         var password = $("#password").val();
+        var captchaCode = $("#captchaCode").val();
         var rememberMe = $("#remember-me").is(":checked");
         if (username === "" || password === "") {
             alert('用户名或密码不能为空');
@@ -40,12 +51,16 @@
             data: {
                 "uname": username,
                 "pword": password,
-                "remember-me-new":rememberMe
+                "remember-me-new":rememberMe,
+                "captchaCode" : captchaCode,
             },
             success: function (json) {
-                if(json.isok){
-                    location.href = json.data;
-                }else{
+                var cookie_name;
+                if (json.isok) {
+                    // console.log(json);
+                    location.href = json.data;  //获取到response里的data中的url
+                  e.log(cookie_value)
+                } else {
                     alert(json.message)
                 }
                 // alert(JSON.stringify(json))

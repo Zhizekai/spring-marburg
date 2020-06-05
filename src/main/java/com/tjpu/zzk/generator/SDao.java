@@ -1,6 +1,6 @@
 package com.tjpu.zzk.generator;
 
-import com.tjpu.zzk.model.S;
+import com.tjpu.zzk.model.SVO;
 
 import java.util.List;
 
@@ -16,19 +16,19 @@ public interface SDao {
 
     int deleteByPrimaryKey(Integer sno);
 
-    int insert(S record);
+    int insert(SVO record);
 
-    int insertSelective(S record);
+    int insertSelective(SVO record);
 
-    List<S> selectByExample(SExample example);
+    List<SVO> selectByExample(SExample example);
 
-    S selectByPrimaryKey(Integer sno);
+    SVO selectByPrimaryKey(Integer sno);
 
-    int updateByExampleSelective(@Param("record") S record, @Param("example") SExample example);
+    int updateByExampleSelective(@Param("record") SVO record, @Param("example") SExample example);
 
-    int updateByExample(@Param("record") S record, @Param("example") SExample example);
+    int updateByExample(@Param("record") SVO record, @Param("example") SExample example);
 
-    int updateByPrimaryKeySelective(S record);
+    int updateByPrimaryKeySelective(SVO record);
 
-    int updateByPrimaryKey(S record);
+    int updateByPrimaryKey(SVO record);
 }

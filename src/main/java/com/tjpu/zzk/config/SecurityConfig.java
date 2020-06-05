@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
@@ -26,16 +27,24 @@ import javax.xml.crypto.Data;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Resource
-    MyAuthenticationSuccessHandler mySuthenticationSuccessHandler;
+    MyAuthenticationSuccessHandler myAuthenticationSuccessHandler;
 
     @Resource
     MyAuthenticationFailureHandler myAuthenticationFailureHandler;
 
-
     @Resource
     MyLogoutSuccessHandler myLogoutSuccessHandler;
+
+    @Resource
+    ZzkAuthSuccessHandler zzkAuthSuccessHandler;
+
+    @Resource
+    MyUserDetailsService myUserDetailsService;
     @Resource
     private DataSource dataSource; //yml文件里配置的数据源
+
+    @Resource
+    private CaptchaCodeFilter captchaCodeFilter;
     //源代码
 //    @Override
 //    protected void configure(HttpSecurity http) throws Exception {
@@ -70,26 +79,26 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 ////                .expiredSessionStrategy(new MyExpiredSessionStrategy());
 //    }
 //
-    @Resource
-    ZzkAuthSuccessHandler zzkAuthSuccessHandler;
 
-    @Resource
-    MyUserDetailsService myUserDetailsService;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
 
 
-        http.csrf().disable() //禁用跨站csrf攻击防御，后面的章节会专门讲解
+        http.addFilterBefore(captchaCodeFilter, UsernamePasswordAuthenticationFilter.class)
+                .csrf().disable() //禁用跨站csrf攻击防御，后面的章节会专门讲解
                 .formLogin()
                 .loginPage("/login.html")//用户未登录时，访问任何资源都转跳到该路径，即登录页面
-                .loginProcessingUrl("/login")//登录表单form中action的地址，也就是处理认证请求的路径
+                //登录表单form中action的地址，也就是处理认证请求的路径，不用自己实现，前端跳转到这个url，SS自动拦截这个请求
+                //并自动做验证
+                .loginProcessingUrl("/login")
+
                 .usernameParameter("uname")///登录表单form中用户名输入框input的name名，不修改的话默认是username
                 .passwordParameter("pword")//form中密码输入框input的name名，不修改的话默认是password
 //                .defaultSuccessUrl("/index")//登录认证成功后默认转跳的路径 和successHandler只能选一个
 //                .failureForwardUrl("/login.html")
-                .successHandler(zzkAuthSuccessHandler)
+                .successHandler(myAuthenticationSuccessHandler)
                 .failureHandler(myAuthenticationFailureHandler)
 
                 //记住密码配置
@@ -101,9 +110,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 //权限设置
                 .and().authorizeRequests()
-                .antMatchers("/login.html","/login","/aftersignout.html").permitAll()//不需要通过登录验证就可以被访问的资源路径
-                .antMatchers("/index").authenticated() //登陆就能看
-                .anyRequest().access("@rbacService.hasPermission(request,authentication)")
+                .antMatchers("/login.html","/login","/aftersignout.html","/kaptcha").permitAll()//不需要通过登录验证就可以被访问的资源路径
+//                .antMatchers("/biz1","/biz2").hasAnyAuthority("ROLE_user","ROLE_admin","ROLE_common")
+//                .antMatchers("/sysuser").hasAnyAuthority("/sysuser")
+//                .antMatchers("/syslog").hasAnyAuthority("/syslog") //在myUserDetail里面setAuthorities
+                //一下路径需要登陆才能访问
+                .antMatchers("/index",
+                        "/rest/*",//开放restful接口
+                        "/swagger-ui.html"
+                ).authenticated() //登陆才能看
+//                .anyRequest().authenticated()
+                .anyRequest().access("@rbacServicezzk.hasPermission(request,authentication)")
 
                 //退出配置
                 .and().logout()
@@ -151,8 +168,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                .and()
 //                    .passwordEncoder(passwordEncoder());//配置BCrypt加密
 
-        auth.userDetailsService(myUserDetailsService)
-                .passwordEncoder(passwordEncoder());
+        auth.userDetailsService(myUserDetailsService).passwordEncoder(passwordEncoder());
     }
 
 
@@ -161,7 +177,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      * 用户名和密码进行加密
      * @return 加密函数
      */
-    @Bean
+    @Bean("passwordEncoder")
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
@@ -177,7 +193,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
            .antMatchers( "/css/**", "/fonts/**", "/img/**", "/js/**",
                    "/**/*.css",
                    "/**/*.js",
-                   "/swagger-ui.html",
                    "/web","/webjars/**",
                    "/swagger-resources/**",
                    "/v2/**",

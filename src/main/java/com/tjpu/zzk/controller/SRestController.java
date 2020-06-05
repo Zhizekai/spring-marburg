@@ -3,7 +3,7 @@ package com.tjpu.zzk.controller;
 
 import com.tjpu.zzk.generator.SDao;
 import com.tjpu.zzk.model.AjaxResponse;
-import com.tjpu.zzk.model.S;
+import com.tjpu.zzk.model.SVO;
 import com.tjpu.zzk.generator.SExample;
 import com.tjpu.zzk.service.SImpl;
 import io.swagger.annotations.ApiOperation;
@@ -42,11 +42,11 @@ public class SRestController {
                               @RequestParam String sName,
                               @RequestParam String status) {
 
-        S s1 = new S();
-        s1.setCity(cityName);
-        s1.setSname(sName);
-        s1.setStatus(status);
-        int count = sDao.insertSelective(s1);
+        SVO SVO1 = new SVO();
+        SVO1.setCity(cityName);
+        SVO1.setSname(sName);
+        SVO1.setStatus(status);
+        int count = sDao.insertSelective(SVO1);
 
 //        sImpl.saveS(s);
 
@@ -70,16 +70,16 @@ public class SRestController {
     /**
      * 修改上带你
      * @param sno 商店对象
-     * @param s 商店编号
+     * @param SVO 商店编号
      * @return 状态
      */
     @ApiOperation(value = "修改商店",httpMethod = "PUT")
     @PutMapping("/s_put/{sno}")
     public AjaxResponse updateS(@PathVariable Integer sno,
-                                @RequestBody S s) {
+                                @RequestBody SVO SVO) {
 
-        s.setSno(sno);
-        sImpl.updateS(s);
+        SVO.setSno(sno);
+        sImpl.updateS(SVO);
         return AjaxResponse.success(sno);
     }
 
@@ -95,7 +95,7 @@ public class SRestController {
         sExample.createCriteria().andCityEqualTo(sCity);
 
 
-        List<S> myself = sDao.selectByExample(sExample);
+        List<SVO> myself = sDao.selectByExample(sExample);
         return AjaxResponse.success(myself );
     }
 

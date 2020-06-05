@@ -204,7 +204,7 @@
     <result column="SNO" jdbcType="INTEGER" property="sno" />
 
     <!--配置spj对象中S集合的映射-->
-    <collection property="ss" ofType="com.tjpu.zzk.model.S">
+    <collection property="SVOS" ofType="com.tjpu.zzk.model.SVO">
       <id column="SNO" jdbcType="INTEGER" property="sno" />
       <result column="SNAME" jdbcType="VARCHAR" property="sname" />
       <result column="STATUS" jdbcType="VARCHAR" property="status" />
@@ -213,6 +213,6 @@
   </resultMap>
   <!--执行sql代码-->
   <select id="findSPJSAll" resultMap="SPJSMap">
-    select * from S s left outer join SPJ spj on s.SNO = spj.SNO
+    select * from S SVO left outer join SPJ spj on SVO.SNO = spj.SNO
   </select>
 </mapper>
