@@ -1,7 +1,6 @@
-package com.tjpu.zzk.config;
+package com.tjpu.zzk.config.auth.imageCode;
 
 import com.tjpu.zzk.config.auth.MyAuthenticationFailureHandler;
-import com.tjpu.zzk.model.CaptchaImageVO;
 import com.tjpu.zzk.utils.MyContants;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.core.AuthenticationException;
@@ -64,7 +63,7 @@ public class CaptchaCodeFilter extends OncePerRequestFilter {
         }
 
         // 获取session池中的验证码谜底
-        CaptchaImageVO codeInSession = (CaptchaImageVO) session.getAttribute(MyContants.CAPTCHA_SESSION_KEY);
+        CaptchaCode codeInSession = (CaptchaCode) session.getAttribute(MyContants.CAPTCHA_SESSION_KEY);
         if(Objects.isNull(codeInSession)) {
             throw new SessionAuthenticationException("您输入的验证码不存在");
         }

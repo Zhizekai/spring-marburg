@@ -1,8 +1,7 @@
 package com.tjpu.zzk.controller;
 
-import com.google.code.kaptcha.Constants;
 import com.google.code.kaptcha.impl.DefaultKaptcha;
-import com.tjpu.zzk.model.CaptchaImageVO;
+import com.tjpu.zzk.config.auth.imageCode.CaptchaCode;
 import com.tjpu.zzk.utils.MyContants;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -34,11 +33,11 @@ public class CaptchaController {
         response.setContentType("image/jpeg");
 
         String capText = captchaProducer.createText();
-        CaptchaImageVO captchaImageVO = new CaptchaImageVO(capText,2 * 60);
+        CaptchaCode captchaCode = new CaptchaCode(capText,2 * 60);
         //将验证码存到session
 //        session.setAttribute(Constants.KAPTCHA_SESSION_KEY, captchaImageVO);
 
-        session.setAttribute(MyContants.CAPTCHA_SESSION_KEY,new CaptchaImageVO(capText,2*60));
+        session.setAttribute(MyContants.CAPTCHA_SESSION_KEY,new CaptchaCode(capText,2*60));
 
         //将图片返回给前端
         try(ServletOutputStream out = response.getOutputStream();) {

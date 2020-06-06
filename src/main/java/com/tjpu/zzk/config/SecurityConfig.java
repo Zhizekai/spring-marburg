@@ -1,6 +1,8 @@
 package com.tjpu.zzk.config;
 
 import com.tjpu.zzk.config.auth.*;
+import com.tjpu.zzk.config.auth.imageCode.CaptchaCodeFilter;
+import com.tjpu.zzk.config.auth.smscode.SmsCodeSecurityConfig;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -17,7 +19,6 @@ import org.springframework.security.web.authentication.rememberme.PersistentToke
 
 import javax.annotation.Resource;
 import javax.sql.DataSource;
-import javax.xml.crypto.Data;
 
 /**
  * spring Security配置
@@ -40,11 +41,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Resource
     MyUserDetailsService myUserDetailsService;
+
     @Resource
     private DataSource dataSource; //yml文件里配置的数据源
 
     @Resource
     private CaptchaCodeFilter captchaCodeFilter;
+
+    @Resource
+    private SmsCodeSecurityConfig smsCodeSecurityConfig;
     //源代码
 //    @Override
 //    protected void configure(HttpSecurity http) throws Exception {
@@ -101,6 +106,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .successHandler(myAuthenticationSuccessHandler)
                 .failureHandler(myAuthenticationFailureHandler)
 
+                .and().apply(smsCodeSecurityConfig)
+
                 //记住密码配置
                 .and().rememberMe()
                 .rememberMeParameter("remember-me-new") //和参数对应
@@ -110,7 +117,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 //权限设置
                 .and().authorizeRequests()
-                .antMatchers("/login.html","/login","/aftersignout.html","/kaptcha").permitAll()//不需要通过登录验证就可以被访问的资源路径
+                .antMatchers("/login.html","/login","/aftersignout.html","/kaptcha","/smscode","/smslogin").permitAll()//不需要通过登录验证就可以被访问的资源路径
 //                .antMatchers("/biz1","/biz2").hasAnyAuthority("ROLE_user","ROLE_admin","ROLE_common")
 //                .antMatchers("/sysuser").hasAnyAuthority("/sysuser")
 //                .antMatchers("/syslog").hasAnyAuthority("/syslog") //在myUserDetail里面setAuthorities

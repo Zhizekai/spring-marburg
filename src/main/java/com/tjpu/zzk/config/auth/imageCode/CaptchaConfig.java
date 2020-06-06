@@ -1,4 +1,4 @@
-package com.tjpu.zzk.config;
+package com.tjpu.zzk.config.auth.imageCode;
 
 import com.google.code.kaptcha.impl.DefaultKaptcha;
 import com.google.code.kaptcha.util.Config;
